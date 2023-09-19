@@ -1,18 +1,13 @@
-global ft_write
 section .text
-extern __errno_location
+global ft_write
 
 ft_write:
-	mov rax, 1
-	syscall
-	cmp rax, 0
-	jl errors
-	ret
+    ; Аргументы функции:
+    ;   rdi - файловый дескриптор (stdout = 1)
+    ;   rsi - указатель на данные
+    ;   rdx - размер данных
 
-errors:
-	neg rax
-	mov rdi, rax
-	call __errno_location
-	mov [rax], rdi
-	mov rax, -1
-	ret
+    mov rax, 1          ; номер системного вызова для write
+    syscall             ; вызвать системный вызов
+
+    ret

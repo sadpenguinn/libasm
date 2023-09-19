@@ -1,26 +1,35 @@
-global ft_strdup
 section .text
-
-extern __errno_location
-extern ft_strlen
-extern ft_strcpy
-extern malloc
+global ft_strdup
 
 ft_strdup:
-	call ft_strlen
-	mov rbx, rdi
-	mov rdi, rax
-	call malloc
-	cmp rax, 0
-	je error
-	mov rdi, rax
-	mov rsi, rbx
-	call ft_strcpy
-	ret
+    ; Аргументы функции:
+    ;   rdi - указатель на исходную строку (источник)
 
-error:
-	call __errno_location
-	mov rdi, 12 ;put here the errno value
-	mov [rax], rdi
-	mov rax, 0
-	ret
+    ; Вычисляем длину строки
+    xor     rcx, rcx        ; Используем rcx как счетчик байт
+    mov     rax, rdi        ; Копируем указатель на источник в rax
+count_loop:
+    cmp     byte [rax], 0   ; Проверяем, достигли ли конца строки
+    je      end_count       ; Если да, завершаем подсчет
+    inc     rax             ; Переходим к следующему байту
+    inc     rcx             ; Увеличиваем счетчик
+    jmp     count_loop      ; Переходим к следующему байту строки
+
+end_count:
+    inc     rcx             ; Увеличиваем счетчик для нулевого байта (конец строки)
+
+    ; Выделяем память под новую строку с использованием malloc
+    push    rdi             ; Сохраняем указатель на исходную строку
+    mov     rdi, rcx        ; Размер строки
+    mov     rax, 0x09       ; Номер системного вызова для malloc
+    syscall
+    pop     rdi             ; Восстанавливаем указатель на исходную строку
+
+    ; Копируем строку из источника в новый буфер
+    mov     rsi, rax        ; Указатель на новый буфер
+    mov     rdi, rdi        ; Источник (исходная строка)
+    mov     rdx, rcx        ; Размер данных для копирования
+    mov     rax, 0x04       ; Номер системного вызова для memcpy (не используем syscall)
+    syscall
+
+    ret
