@@ -108,8 +108,8 @@ void test_ft_strdup() {
     for (int i = 0; i < ft_strdup_cases_size; i++)
     {
         printf("Test %d : ", i + 1);
-        int actual = ft_strdup(ft_strdup_cases[i].str);
-        int expected = strdup(ft_strdup_cases[i].str);
+        char * actual = ft_strdup(ft_strdup_cases[i].str);
+        char * expected = strdup(ft_strdup_cases[i].str);
         if (strcmp(actual, expected)) {
             printf("OK\n");
             free(actual);
@@ -135,15 +135,15 @@ void test_ft_strcpy() {
     int ft_strcpy_cases_size = 7;
     ft_strcpy_test_data ft_strcpy_cases[ft_strcpy_cases_size];
 
-    ft_strcpy_cases[0] = (ft_strcpy_test_data){"test", malloc(5)};
-    ft_strcpy_cases[1] = (ft_strcpy_test_data){"testqsfndkjq", malloc(13)};
-    ft_strcpy_cases[2] = (ft_strcpy_test_data){"q", malloc(2)};
-    ft_strcpy_cases[3] = (ft_strcpy_test_data){"", malloc(1)};
-    ft_strcpy_cases[4] = (ft_strcpy_test_data){"1111111111111111122", malloc(20)};
-    ft_strcpy_cases[5] = (ft_strcpy_test_data){"\n\n\n\n\n\n\n\n", malloc(9)};
-    ft_strcpy_cases[6] = (ft_strcpy_test_data){"HAHAHAHA \0 TA FAIL XD", malloc(10)};
+    ft_strcpy_cases[0] = (ft_strcpy_test_data){"test"};
+    ft_strcpy_cases[1] = (ft_strcpy_test_data){"testqsfndkjq"};
+    ft_strcpy_cases[2] = (ft_strcpy_test_data){"q"};
+    ft_strcpy_cases[3] = (ft_strcpy_test_data){""};
+    ft_strcpy_cases[4] = (ft_strcpy_test_data){"1111111111111111122"};
+    ft_strcpy_cases[5] = (ft_strcpy_test_data){"\n\n\n\n\n\n\n\n"};
+    ft_strcpy_cases[6] = (ft_strcpy_test_data){"HAHAHAHA \0 TA FAIL XD"};
 
-    for (int i = 0; i < ft_strcpy_cases; i++)
+    for (int i = 0; i < ft_strcpy_cases_size; i++)
     {
         printf("Test %d : ", i + 1);
         size_t len = strlen(ft_strcpy_cases[i].str);

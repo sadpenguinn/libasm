@@ -1,5 +1,3 @@
-mkdir /home/admin
-cd /home/admin
-apt update
+mkdir /home/admin && cd /home/admin && apt update
 apt install git gcc nasm make vim
-git clone https://github.com/sadpenguinn/libasm.git
+git clone https://github.com/sadpenguinn/libasm.git && cd libasm && make && gcc -m64 main.c libasm.a && ./a.out
