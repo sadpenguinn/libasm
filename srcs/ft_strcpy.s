@@ -1,19 +1,18 @@
 section .text
-global ft_strcpy
+        global ft_strcpy
 
-ft_strcpy:
-    ; Аргументы функции:
-    ;   rdi - указатель на исходную строку (источник)
-    ;   rsi - указатель на буфер (назначение)
+ft_strcpy:                     ; char *     stpcpy(char * dst, const char * src);
+        push rbp                    ; function's prologue https://beta.hackndo.com/stack-introduction/#prologue---%C3%A9pilogue
+        mov rbp, rsp                ; https://stackoverflow.com/questions/42208087/are-the-prologue-and-epilogue-mandatory-when-writing-assembly-functions
+        mov rax, rdi                ; set return value to rdi, 1st arg, return value of strcpy (return value is in rax)
 
-    xor rcx, rcx          ; Используем rcx как счетчик байт
+_loop:
+        cmp [rsi], byte 0           ; is rsi pnt on \0?
+        jz _loop_end                ; if \0, jump to the end
+        movsb                       ; copy on byte of rsi in rdi and inc or dec https://www.gladir.com/LEXIQUE/ASM/movsb.htm on DF https://stackoverflow.com/questions/41090297/default-state-of-direction-flag-df-during-x86-program-execution https://en.wikipedia.org/wiki/Direction_flag
+        jmp _loop                   ; redo the loop
 
-copy_loop:
-    mov al, [rdi + rcx]  ; Загружаем байт из источника
-    mov [rsi + rcx], al  ; Сохраняем его в назначении
-
-    inc rcx              ; Увеличиваем счетчик
-    cmp byte [rdi + rcx], 0  ; Проверяем, достигли ли конца строки
-    jnz copy_loop        ; Если нет, продолжаем копирование
-
-    ret
+_loop_end:
+        mov byte [rdi], 0           ; set the last byte to \0
+        pop rbp                     ; function's epilogue
+        ret

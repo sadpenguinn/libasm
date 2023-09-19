@@ -1,13 +1,20 @@
-section .text
 global ft_read
+extern __errno_location
 
+		section	.text
 ft_read:
-    ; Аргументы функции:
-    ;   rdi - файловый дескриптор (stdin = 0)
-    ;   rsi - указатель на буфер
-    ;   rdx - количество байт для чтения
-
-    mov rax, 0          ; номер системного вызова для read
-    syscall             ; вызвать системный вызов
-
-    ret
+		push	rbx
+		mov		rax, 0	; Systemcall for read
+		syscall
+		cmp 	rax, 0
+		jl 		error
+		pop		rbx
+		ret
+error:
+		neg		rax
+		mov		rdi, rax
+		call 	__errno_location wrt ..plt
+		mov		[rax], rdi
+		mov		rax, -1
+		pop		rbx
+		ret

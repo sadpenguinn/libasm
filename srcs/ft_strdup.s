@@ -1,35 +1,28 @@
-section .text
 global ft_strdup
+extern ft_strcpy
+extern ft_strlen
+extern malloc
 
+		section	.text
 ft_strdup:
-    ; Аргументы функции:
-    ;   rdi - указатель на исходную строку (источник)
-
-    ; Вычисляем длину строки
-    xor     rcx, rcx        ; Используем rcx как счетчик байт
-    mov     rax, rdi        ; Копируем указатель на источник в rax
-count_loop:
-    cmp     byte [rax], 0   ; Проверяем, достигли ли конца строки
-    je      end_count       ; Если да, завершаем подсчет
-    inc     rax             ; Переходим к следующему байту
-    inc     rcx             ; Увеличиваем счетчик
-    jmp     count_loop      ; Переходим к следующему байту строки
-
-end_count:
-    inc     rcx             ; Увеличиваем счетчик для нулевого байта (конец строки)
-
-    ; Выделяем память под новую строку с использованием malloc
-    push    rdi             ; Сохраняем указатель на исходную строку
-    mov     rdi, rcx        ; Размер строки
-    mov     rax, 0x09       ; Номер системного вызова для malloc
-    syscall
-    pop     rdi             ; Восстанавливаем указатель на исходную строку
-
-    ; Копируем строку из источника в новый буфер
-    mov     rsi, rax        ; Указатель на новый буфер
-    mov     rdi, rdi        ; Источник (исходная строка)
-    mov     rdx, rcx        ; Размер данных для копирования
-    mov     rax, 0x04       ; Номер системного вызова для memcpy (не используем syscall)
-    syscall
-
-    ret
+		cmp		rdi, 0		; Check for NULL ptr
+		je		error
+		push	rdi			; Save ptr on the stack for later
+get_length:
+		call	ft_strlen
+		inc		rax
+		mov		rdi, rax	; Give the length to rdi
+allocate:
+		call	malloc wrt ..plt
+		pop		rsi			; Remove from stack and alignment
+		cmp		rax, 0		; Check for failure
+		je		error		; Leave if malloc failure
+copy:
+		mov		rdi, rax	; Give malloc ptr to rdi
+		push	rdx			; Stack alignment
+		call	ft_strcpy
+		pop		rdx			; Stack alignment
+		ret
+error:
+		xor		rax, rax
+		ret
