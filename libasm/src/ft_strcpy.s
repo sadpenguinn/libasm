@@ -2,8 +2,7 @@
 
 		          section    .text
 
-ft_strcpy:
-		          push       rbx                        ; Save rbx to stack by the convention
+ft_strcpy:                                              ; char *ft_strcpy(char *dest, char *src)
 		          mov        rax, rdi                   ; Move first argument (dest) to rax
 		          jmp        _loop                      ; Jump to _loop
 
@@ -15,5 +14,4 @@ _loop:
 
 _end:
 		          mov       byte [rdi], 0               ; Set the end of the dest string to \0
-	              pop       rbx                         ; Restore stack to rbx
 	              ret

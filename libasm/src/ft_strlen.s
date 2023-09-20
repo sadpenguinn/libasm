@@ -2,8 +2,7 @@
 
 		          section    .text
 
-ft_strlen:
-		          push       rbx                        ; Save rbx to stack by the convention
+ft_strlen:                                              ; size_t ft_strlen(const char *str)
 	              xor        rax, rax                   ; Clear rax
 	              jmp        _loop                      ; Jump to _loop
 
@@ -15,5 +14,4 @@ _loop:
 	              jmp       _loop                       ; Next iteration
 
 _end:
-	              pop       rbx                         ; Restore stack to rbx
 	              ret
