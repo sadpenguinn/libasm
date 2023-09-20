@@ -26,7 +26,7 @@ void test_ft_strlen() {
 	ft_strlen_cases[1] = (ft_strlen_test_data){"testqsfndkjq"};
 	ft_strlen_cases[2] = (ft_strlen_test_data){"dfvsxwvwestqsfndkjq"};
 	ft_strlen_cases[3] = (ft_strlen_test_data){""};
-	ft_strlen_cases[4] = (ft_strlen_test_data){"1111111111111111122"};
+	ft_strlen_cases[4] = (ft_strlen_test_data){"111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111122"};
 	ft_strlen_cases[5] = (ft_strlen_test_data){"\n\n\n\n\n\n\n\n"};
 	ft_strlen_cases[6] = (ft_strlen_test_data){"HAHAHAHA \0 TA FAIL XD"};
 
@@ -55,26 +55,30 @@ void test_ft_strcmp() {
 	printf("####                 FT_STRCMP                   ####\n");
 	printf("#####################################################\n");
 
-	int ft_strcmp_cases_size = 9;
+	int ft_strcmp_cases_size = 10;
 	ft_strcmp_test_data ft_strcmp_cases[ft_strcmp_cases_size];
 
 	ft_strcmp_cases[0] = (ft_strcmp_test_data){"test", "test"};
 	ft_strcmp_cases[1] = (ft_strcmp_test_data){"testqsfndkjq", "testqsfndkjq"};
 	ft_strcmp_cases[2] = (ft_strcmp_test_data){"dfvsxwvwestqsfndkjq", "q"};
 	ft_strcmp_cases[3] = (ft_strcmp_test_data){"", ""};
-	ft_strcmp_cases[4] = (ft_strcmp_test_data){"1111111111111111122", "2111111"};
+	ft_strcmp_cases[4] = (ft_strcmp_test_data){"11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111122", "2111111"};
 	ft_strcmp_cases[5] = (ft_strcmp_test_data){"\n\n\n\n\n\n\n\n", "\n\n\n\n\n\n\n\n"};
 	ft_strcmp_cases[6] = (ft_strcmp_test_data){"HAHAHAHA \0 TA FAIL XD", "HAHAHAHA \0 GGGGGGGGG"};
 	ft_strcmp_cases[7] = (ft_strcmp_test_data){"", "value"};
 	ft_strcmp_cases[8] = (ft_strcmp_test_data){"value", ""};
+    ft_strcmp_cases[9] = (ft_strcmp_test_data){"abc", "def"};
 
 	for (int i = 0; i < ft_strcmp_cases_size; i++)
 	{
 		printf("Test %d : ", i + 1);
 		int actual = ft_strcmp(ft_strcmp_cases[i].s1, ft_strcmp_cases[i].s2);
 		int expected = strcmp(ft_strcmp_cases[i].s1, ft_strcmp_cases[i].s2);
-		if (actual == expected)
+		if (actual == expected) {
+            printf("%d\n", actual);
 			printf("OK\n");
+        }
+            
 		else {
 			printf("KO\n");
 			printf("Expected result of strcmp(%s, %s) is %d, got %d\n", ft_strcmp_cases[i].s1, ft_strcmp_cases[i].s2, expected, actual);
@@ -99,7 +103,7 @@ void test_ft_strdup() {
     ft_strdup_cases[1] = (ft_strdup_test_data){"testqsfndkjq"};
     ft_strdup_cases[2] = (ft_strdup_test_data){"q"};
     ft_strdup_cases[3] = (ft_strdup_test_data){""};
-    ft_strdup_cases[4] = (ft_strdup_test_data){"1111111111111111122"};
+    ft_strdup_cases[4] = (ft_strdup_test_data){"11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111122"};
     ft_strdup_cases[5] = (ft_strdup_test_data){"\n\n\n\n\n\n\n\n"};
     ft_strdup_cases[6] = (ft_strdup_test_data){"HAHAHAHA \0 TA FAIL XD"};
 
@@ -137,7 +141,7 @@ void test_ft_strcpy() {
     ft_strcpy_cases[1] = (ft_strcpy_test_data){"testqsfndkjq"};
     ft_strcpy_cases[2] = (ft_strcpy_test_data){"q"};
     ft_strcpy_cases[3] = (ft_strcpy_test_data){""};
-    ft_strcpy_cases[4] = (ft_strcpy_test_data){"1111111111111111122"};
+    ft_strcpy_cases[4] = (ft_strcpy_test_data){"1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111122"};
     ft_strcpy_cases[5] = (ft_strcpy_test_data){"\n\n\n\n\n\n\n\n"};
     ft_strcpy_cases[6] = (ft_strcpy_test_data){"HAHAHAHA \0 TA FAIL XD"};
 

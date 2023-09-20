@@ -19,14 +19,14 @@ _loop:
 	              jne        ft_strcmp_diff
 
 ft_strcmp_diff:
-	              sub        al, cl                      ; al - cl
+	              sub        al, cl                      ; Second - first
 	              jc         ft_strcmp_of                ; If JC is set, then the subtraction resulted in a borrow
 	              neg        rax                         ; Negate the result, the first string is less than the second
 	              ret
 
 ft_strcmp_of:
 	              mov        dl, 255                     ; 0xFF Maximum value of a byte
-	              sub        dl, al                      ; 0xFF - al
+	              sub        dl, al                      ; 0xFF - al, we got a value as we don't faced borrowing
 	              mov        al, dl                      ; Move the result to al
-	              inc        rax
+	              inc        rax                         ; Increment, becase ASCII starts from 0
 	              ret
