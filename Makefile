@@ -1,34 +1,24 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: frdescam <marvin@42.fr>                    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/06/21 16:00:31 by frdescam          #+#    #+#              #
-#    Updated: 2020/07/29 14:34:02 by frdescam         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+NAME = libasm_test
 
-NAME = libasm.a
+LIB_NAME = libasm.a
 
-SRCS = srcs/ft_strcmp.s srcs/ft_strlen.s srcs/ft_strcpy.s srcs/ft_write.s \
-	   srcs/ft_read.s srcs/ft_strdup.s
+SRCS = src/main.c
 
 OBJS = ${SRCS:.s=.o}
 
 CC		= clang
-NA		= nasm
 RM		= rm -f
 
 CFLAGS		= -g3
-NASMFLAGS	= -f elf64
 
 %.o:	%.s
-		${NA} ${NASMFLAGS} $<
+		${CC} ${CFLAGS} $<
 
-$(NAME): ${OBJS}
-		ar rcs ${NAME} ${OBJS}
+$(NAME): ${OBJS} $(LIB_NAME)
+		${CC} -L. -lasm ${OBJS} -o ${NAME}
+
+$(LIB_NAME):
+		make -C libasm/ && cp libasm/libasm.a .
 
 all:	${NAME}
 
@@ -37,11 +27,7 @@ clean:
 
 fclean:	clean
 		${RM} ${NAME}
-		${RM} test
 
 re:		fclean all
-
-test: fclean all
-	${CC} ${CFLAGS} main.c ${NAME} -o test
 
 .PHONY : all clean fclean re teset
