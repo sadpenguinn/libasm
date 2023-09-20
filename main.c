@@ -164,6 +164,52 @@ void test_ft_strcpy() {
     }
 }
 
+void test_ft_read() {
+    printf("#####################################################\n");
+    printf("####                  FT_READ                    ####\n");
+    printf("#####################################################\n");
+
+    printf("Test 1 : ");
+
+    char actual[1000];
+    ssize_t actual_count = ft_read(0, actual, 1000);
+
+    char expected[1000];
+    ssize_t expected_count = read(0, expected, 1000);
+
+    if (strcmp(actual, expected) && actual_count == expected_count) {
+        printf("OK\n");
+    }
+    else {
+        printf("KO\n");
+        printf("Expected result of read is %s, %d, got %s, %d\n", expected, expected_count, actual, actual_count);
+        exit(1);
+    }
+}
+
+void test_ft_write() {
+    printf("#####################################################\n");
+    printf("####                  FT_WRITE                   ####\n");
+    printf("#####################################################\n");
+
+    printf("Test 1 : ");
+    char *str1 = "test line";
+    ft_write(0, str1, 10)
+    write(0, str1, 10)
+
+    printf("Test 2 : ");
+    char *str2 = "test line with zero \0 fffff";
+    ft_write(0, str2, 28)
+    write(0, str2, 28)
+
+    printf("Test 3 : ");
+    char *str3 = NULL;
+    ft_write(0, str3, 28)
+    write(0, str3, 28)
+
+    printf("Compare this lines by yourself :)\n")
+}
+
 int	main() {
 	test_ft_strlen();
 	printf("\n");
@@ -172,4 +218,8 @@ int	main() {
     test_ft_strdup();
     printf("\n");
     test_ft_strcpy();
+    printf("\n");
+    test_ft_read();
+    printf("\n");
+    test_ft_write();
 }

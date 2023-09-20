@@ -1,33 +1,38 @@
-section .text
-global ft_strcmp
+                  global     ft_strcmp
+
+		          section    .text
 
 ft_strcmp:
-	mov rcx, 0
-	mov rax, 0
+		          push       rbx                        ; Save rbx to stack by the convention
+	              xor        rax, rax                   ; Clear rax
+	              ;xor        rcx, rcx                   ; Clear rcx
+	              jmp        _loop                      ; Jump to _loop
 
-loop:
-	mov cl, [rdi]
-	mov al, [rsi]
-	inc rdi
-	inc rsi
-	jmp check
+_loop:
+	              mov        cl, [rdi]                  ; Move byte from rdi to cl (ecx)
+	              mov        al, [rsi]                  ; Move byte from rsi to al (eax)
+	              inc        rdi                        ; Increment first pointer
+	              inc        rsi                        ; Increment second pointer
+	              jmp        ft_strcmp_compare
 
-check:
-	cmp cl, 0
-	je ret_diff
-	cmp al, cl
-	je loop
-	jne ret_diff
+ft_strcmp_compare:
+	              cmp        cl, 0                      ; Check if we faced end of the first string
+	              je         ft_strcmp_diff
+	              cmp        al, cl
+	              je         _loop
+	              jne        ft_strcmp_diff
 
-ret_diff:
-	sub al, cl
-	jc correct_overflow
-	neg rax
-	ret
+ft_strcmp_diff:
+	              sub        al, cl                      ; cl - al
+	              jc         ft_strcmp_overflow          ; If JC is set, then the subtraction resulted in a borrow
+	              neg        rax                         ; Negate the result, the first string is less than the second
+	              pop        rbx                         ; Restore stack to rbx
+	              ret
 
-correct_overflow:
-	mov dl, 255
-	sub dl, al
-	mov al, dl
+ft_strcmp_overflow:
+	mov dl, 255 ; 0xFF Maximum value of a byte
+	sub dl, al ; 0xFF - al
+	mov al, dl ; Move the result to al
 	inc rax
+		              pop        rbx                         ; Restore stack to rbx
 	ret
