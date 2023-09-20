@@ -4,18 +4,18 @@ LIB_NAME = libasm.a
 
 SRCS = src/main.c
 
-OBJS = ${SRCS:.s=.o}
+OBJS = ${SRCS:.c=.o}
 
 CC		= clang
 RM		= rm -f
 
 CFLAGS		= -g3
 
-%.o:	%.s
-		${CC} ${CFLAGS} $<
+%.o:	%.c
+		${CC} -o $@ -c $?  ${CFLAGS}
 
 $(NAME): ${OBJS} $(LIB_NAME)
-		${CC} -L. -lasm ${OBJS} -o ${NAME}
+		${CC} ${OBJS} -L. -lasm -o ${NAME}
 
 $(LIB_NAME):
 		make -C libasm/ && cp libasm/libasm.a .
