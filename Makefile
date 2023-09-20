@@ -1,33 +1,31 @@
 NAME = libasm_test
-
-LIB_NAME = libasm.a
+LIB_NAME = asm
 
 SRCS = src/main.c
 
 OBJS = ${SRCS:.c=.o}
 
 CC		= clang
-RM		= rm -f
+FLAGS	= -g3
 
-CFLAGS		= -g3
+%.o: %.c
+	${CC} -o $@ -c $?  ${FLAGS}
 
-%.o:	%.c
-		${CC} -o $@ -c $?  ${CFLAGS}
+$(NAME): ${OBJS} lib$(LIB_NAME).a
+	${CC} ${OBJS} -L. -l${LIB_NAME} -o ${NAME}
 
-$(NAME): ${OBJS} $(LIB_NAME)
-		${CC} ${OBJS} -L. -lasm -o ${NAME}
+lib$(LIB_NAME).a:
+	make -C lib${LIB_NAME}/ && cp lib${LIB_NAME}/lib${LIB_NAME}.a .
 
-$(LIB_NAME):
-		make -C libasm/ && cp libasm/libasm.a .
-
-all:	${NAME}
+all: ${NAME}
 
 clean:
-		${RM} ${OBJS}
+	rm -f ${OBJS}
 
 fclean:	clean
-		${RM} ${NAME}
+	rm -f ${NAME}
+	rm -f lib${LIB_NAME}.a
 
-re:		fclean all
+re: fclean all
 
 .PHONY : all clean fclean re teset

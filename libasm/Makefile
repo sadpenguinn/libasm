@@ -1,30 +1,31 @@
 NAME = libasm.a
 
-SRCS = src/ft_strcmp.s src/ft_strlen.s src/ft_strcpy.s src/ft_write.s \
-	   src/ft_read.s src/ft_strdup.s
+SRCS = src/ft_strcmp.s \
+	   src/ft_strlen.s \
+	   src/ft_strcpy.s \
+	   src/ft_write.s \
+	   src/ft_read.s \
+	   src/ft_strdup.s
 
 OBJS = ${SRCS:.s=.o}
 
-NA		= nasm
-RM		= rm -f
+CC		= nasm
+FLAGS	= -f elf64
 
-NASMFLAGS	= -f elf64
-
-%.o:	%.s
-		${NA} ${NASMFLAGS} $<
+%.o: %.s
+	${CC} ${FLAGS} $<
 
 $(NAME): ${OBJS}
-		ar rcs ${NAME} ${OBJS}
+	ar rcs ${NAME} ${OBJS}
 
-all:	${NAME}
+all: ${NAME}
 
 clean:
-		${RM} ${OBJS}
+	rm -f ${OBJS}
 
 fclean:	clean
-		${RM} ${NAME}
-		${RM} test
+	rm -f ${NAME}
 
-re:		fclean all
+re: fclean all
 
-.PHONY : all clean fclean re teset
+.PHONY : all clean fclean re

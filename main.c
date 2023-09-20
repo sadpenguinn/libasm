@@ -2,8 +2,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <errno.h>
-#include <fcntl.h>
 
 size_t	ft_strlen(const char *str);
 char	*ft_strcpy(char *dest, char *src);
