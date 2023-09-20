@@ -21,10 +21,12 @@ all: ${NAME}
 
 clean:
 	rm -f ${OBJS}
+	make -C lib${LIB_NAME}/ clean
 
 fclean:	clean
 	rm -f ${NAME}
 	rm -f lib${LIB_NAME}.a
+	make -C lib${LIB_NAME}/ fclean
 
 re: fclean all
 
